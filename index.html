@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Lost Puppy Flashcards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">The Lost Puppy Flashcards</h1>
+    <div id="flashcard-container" class="flip-card w-full max-w-md h-64">
+        <div class="flip-card-inner relative w-full h-full">
+            <div class="flip-card-front absolute w-full h-full bg-blue-200 rounded-lg shadow-lg flex items-center justify-center p-6">
+                <p id="question" class="text-xl text-center font-semibold text-gray-800"></p>
+            </div>
+            <div class="flip-card-back absolute w-full h-full bg-green-200 rounded-lg shadow-lg flex items-center justify-center p-6">
+                <p id="answer" class="text-xl text-center font-semibold text-gray-800"></p>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 flex space-x-4">
+        <button id="back-btn" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition">Back</button>
+        <button id="next-btn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Next</button>
+    </div>
+    <p id="card-counter" class="mt-2 text-gray-600">Card 1 of 15</p>
+
+    <script>
+        const flashcards = [
+            { question: "What is the name of the puppy in the story?", answer: "The puppy’s name is Max." },
+            { question: "What kind of dog is Max?", answer: "Max is a fluffy golden retriever with big, bright eyes." },
+            { question: "Where does the story take place?", answer: "The story takes place in a small town." },
+            { question: "Why does Max leave his yard?", answer: "Max leaves his yard to explore the neighborhood." },
+            { question: "What is the weather like when Max goes on his adventure?", answer: "It is a sunny day." },
+            { question: "What does Max chase while wandering?", answer: "Max chases butterflies." },
+            { question: "What does Max sniff during his adventure?", answer: "Max sniffs flowers." },
+            { question: "Who is the friendly cat Max meets?", answer: "The friendly cat Max meets is named Whiskers." },
+            { question: "How does Max feel when he realizes he is far from home?", answer: "Max feels scared." },
+            { question: "Who helps Max when he is lost?", answer: "A kind girl named Lily helps Max." },
+            { question: "What does Lily say to comfort Max?", answer: "Lily says, “Don’t worry, little puppy! I will help you find your way home.”" },
+            { question: "How does Lily know how to contact Max’s owner?", answer: "Lily reads Max’s name tag, which has his owner’s phone number." },
+            { question: "What does Max do when he sees his owner?", answer: "Max jumps into his owner’s arms, barking with joy." },
+            { question: "What lesson does Max learn after his adventure?", answer: "Max learns to stay close to home." },
+            { question: "Who does Max never forget after his adventure?", answer: "Max never forgets his new friend, Lily." }
+        ];
+
+        let currentCard = 0;
+        const flashcardContainer = document.getElementById('flashcard-container');
+        const questionElement = document.getElementById('question');
+        const answerElement = document.getElementById('answer');
+        const nextBtn = document.getElementById('next-btn');
+        const backBtn = document.getElementById('back-btn');
+        const cardCounter = document.getElementById('card-counter');
+
+        function showCard(index) {
+            questionElement.textContent = flashcards[index].question;
+            answerElement.textContent = flashcards[index].answer;
+            cardCounter.textContent = `Card ${index + 1} of ${flashcards.length}`;
+            flashcardContainer.classList.remove('flipped');
+        }
+
+        flashcardContainer.addEventListener('click', () => {
+            flashcardContainer.classList.toggle('flipped');
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentCard = (currentCard + 1) % flashcards.length;
+            showCard(currentCard);
+        });
+
+        backBtn.addEventListener('click', () => {
+            currentCard = (currentCard - 1 + flashcards.length) % flashcards.length;
+            showCard(currentCard);
+        });
+
+        // Initialize first card
+        showCard(currentCard);
+    </script>
+</body>
+</html>
