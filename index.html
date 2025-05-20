@@ -6,6 +6,12 @@
     <title>The Lost Puppy Flashcards</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        body {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 1s ease-in-out;
+        }
         .flip-card {
             perspective: 1000px;
         }
@@ -26,73 +32,107 @@
     </style>
 </head>
 <body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
-    <h1 class="text-3xl font-bold mb-6 text-gray-800">The Lost Puppy Flashcards</h1>
-    <div id="flashcard-container" class="flip-card w-full max-w-md h-64">
-        <div class="flip-card-inner relative w-full h-full">
-            <div class="flip-card-front absolute w-full h-full bg-blue-200 rounded-lg shadow-lg flex items-center justify-center p-6">
-                <p id="question" class="text-xl text-center font-semibold text-gray-800"></p>
-            </div>
-            <div class="flip-card-back absolute w-full h-full bg-green-200 rounded-lg shadow-lg flex items-center justify-center p-6">
-                <p id="answer" class="text-xl text-center font-semibold text-gray-800"></p>
-            </div>
+<h1 class="text-3xl font-bold mb-6 text-gray-800">The Lost Puppy Flashcards</h1>
+<div id="flashcard-container" class="flip-card w-full max-w-md h-64">
+    <div class="flip-card-inner relative w-full h-full">
+        <div class="flip-card-front absolute w-full h-full bg-blue-200 rounded-lg shadow-lg flex items-center justify-center p-6">
+            <p id="question" class="text-xl text-center font-semibold text-gray-800"></p>
+        </div>
+        <div class="flip-card-back absolute w-full h-full bg-green-200 rounded-lg shadow-lg flex items-center justify-center p-6">
+            <p id="answer" class="text-xl text-center font-semibold text-gray-800"></p>
         </div>
     </div>
-    <div class="mt-4 flex space-x-4">
-        <button id="back-btn" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition">Back</button>
-        <button id="next-btn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Next</button>
-    </div>
-    <p id="card-counter" class="mt-2 text-gray-600">Card 1 of 15</p>
+</div>
+<div class="mt-4 flex space-x-4">
+    <button id="back-btn" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition">Back</button>
+    <button id="next-btn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Next</button>
+</div>
+<p id="card-counter" class="mt-2 text-gray-600">Card 1 of 15</p>
 
-    <script>
-        const flashcards = [
-            { question: "What is the name of the puppy in the story?", answer: "The puppy’s name is Max." },
-            { question: "What kind of dog is Max?", answer: "Max is a fluffy golden retriever with big, bright eyes." },
-            { question: "Where does the story take place?", answer: "The story takes place in a small town." },
-            { question: "Why does Max leave his yard?", answer: "Max leaves his yard to explore the neighborhood." },
-            { question: "What is the weather like when Max goes on his adventure?", answer: "It is a sunny day." },
-            { question: "What does Max chase while wandering?", answer: "Max chases butterflies." },
-            { question: "What does Max sniff during his adventure?", answer: "Max sniffs flowers." },
-            { question: "Who is the friendly cat Max meets?", answer: "The friendly cat Max meets is named Whiskers." },
-            { question: "How does Max feel when he realizes he is far from home?", answer: "Max feels scared." },
-            { question: "Who helps Max when he is lost?", answer: "A kind girl named Lily helps Max." },
-            { question: "What does Lily say to comfort Max?", answer: "Lily says, “Don’t worry, little puppy! I will help you find your way home.”" },
-            { question: "How does Lily know how to contact Max’s owner?", answer: "Lily reads Max’s name tag, which has his owner’s phone number." },
-            { question: "What does Max do when he sees his owner?", answer: "Max jumps into his owner’s arms, barking with joy." },
-            { question: "What lesson does Max learn after his adventure?", answer: "Max learns to stay close to home." },
-            { question: "Who does Max never forget after his adventure?", answer: "Max never forgets his new friend, Lily." }
-        ];
+<script>
+    const flashcards = [
+        { question: "What is the name of the puppy in the story?", answer: "The puppy’s name is Max." },
+        { question: "What kind of dog is Max?", answer: "Max is a fluffy golden retriever with big, bright eyes." },
+        { question: "Where does the story take place?", answer: "The story takes place in a small town." },
+        { question: "Why does Max leave his yard?", answer: "Max leaves his yard to explore the neighborhood." },
+        { question: "What is the weather like when Max goes on his adventure?", answer: "It is a sunny day." },
+        { question: "What does Max chase while wandering?", answer: "Max chases butterflies." },
+        { question: "What does Max sniff during his adventure?", answer: "Max sniffs flowers." },
+        { question: "Who is the friendly cat Max meets?", answer: "The friendly cat Max meets is named Whiskers." },
+        { question: "How does Max feel when he realizes he is far from home?", answer: "Max feels scared." },
+        { question: "Who helps Max when he is lost?", answer: "A kind girl named Lily helps Max." },
+        { question: "What does Lily say to comfort Max?", answer: "Lily says, “Don’t worry, little puppy! I will help you find your way home.”" },
+        { question: "How does Lily know how to contact Max’s owner?", answer: "Lily reads Max’s name tag, which has his owner’s phone number." },
+        { question: "What does Max do when he sees his owner?", answer: "Max jumps into his owner’s arms, barking with joy." },
+        { question: "What lesson does Max learn after his adventure?", answer: "Max learns to stay close to home." },
+        { question: "Who does Max never forget after his adventure?", answer: "Max never forgets his new friend, Lily." }
+    ];
 
-        let currentCard = 0;
-        const flashcardContainer = document.getElementById('flashcard-container');
-        const questionElement = document.getElementById('question');
-        const answerElement = document.getElementById('answer');
-        const nextBtn = document.getElementById('next-btn');
-        const backBtn = document.getElementById('back-btn');
-        const cardCounter = document.getElementById('card-counter');
+    // Array of background image URLs
+    const backgroundImages = [
+        'images/image1.jpg',
+        'images/image2.jpg',
+        'images/image3.jpg',
+        'images/image4.jpg',
+        'images/image5.jpg',
+        'images/image6.jpg',
+        'images/image7.jpg',
+        'images/image8.jpg',
+        'images/image9.jpg',
+        'images/image10.jpg',
+        'images/image11.jpg',
+        'images/image12.jpg',
+        'images/image13.jpg',
+        'images/image14.jpg',
+        'images/image15.jpg',
+        'images/image16.jpg',
+        'images/image17.jpg'
+    ];
 
-        function showCard(index) {
-            questionElement.textContent = flashcards[index].question;
-            answerElement.textContent = flashcards[index].answer;
-            cardCounter.textContent = `Card ${index + 1} of ${flashcards.length}`;
-            flashcardContainer.classList.remove('flipped');
-        }
+    let currentCard = 0;
+    let currentImageIndex = 0;
+    const flashcardContainer = document.getElementById('flashcard-container');
+    const questionElement = document.getElementById('question');
+    const answerElement = document.getElementById('answer');
+    const nextBtn = document.getElementById('next-btn');
+    const backBtn = document.getElementById('back-btn');
+    const cardCounter = document.getElementById('card-counter');
 
-        flashcardContainer.addEventListener('click', () => {
-            flashcardContainer.classList.toggle('flipped');
-        });
+    function showCard(index) {
+        questionElement.textContent = flashcards[index].question;
+        answerElement.textContent = flashcards[index].answer;
+        cardCounter.textContent = `Card ${index + 1} of ${flashcards.length}`;
+        flashcardContainer.classList.remove('flipped');
+    }
 
-        nextBtn.addEventListener('click', () => {
-            currentCard = (currentCard + 1) % flashcards.length;
-            showCard(currentCard);
-        });
+    // Function to change background image
+    function changeBackgroundImage() {
+        document.body.style.backgroundImage = `url('${backgroundImages[currentImageIndex]}')`;
+        currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
+    }
 
-        backBtn.addEventListener('click', () => {
-            currentCard = (currentCard - 1 + flashcards.length) % flashcards.length;
-            showCard(currentCard);
-        });
+    // Initialize first background image
+    changeBackgroundImage();
 
-        // Initialize first card
+    // Change background image every 5 seconds
+    setInterval(changeBackgroundImage, 5000);
+
+    flashcardContainer.addEventListener('click', () => {
+        flashcardContainer.classList.toggle('flipped');
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentCard = (currentCard + 1) % flashcards.length;
         showCard(currentCard);
-    </script>
+    });
+
+    backBtn.addEventListener('click', () => {
+        currentCard = (currentCard - 1 + flashcards.length) % flashcards.length;
+        showCard(currentCard);
+    });
+
+    // Initialize first card
+    showCard(currentCard);
+</script>
 </body>
 </html>
